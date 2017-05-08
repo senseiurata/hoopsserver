@@ -24,13 +24,16 @@ app.use(function(req, res, next) {
 const options = {
   'host': 'stats.nba.com',
   'headers': {
-    'referer': 'http://stats.nba.com/scores'
-  }
+    'accept-encoding': 'Accepflate, sdch',
+    'accept-language': 'he-IL,he;q=0.8,en-US;q=0.6,en;q=0.4',
+    'connection': 'keep-alive',
+    'referer': 'http://stats.nba.com/',
+  },
 }
 
 app.get('/players', (req, res) => {
   http.get(Object.assign(options, {
-    'path': encodeURI('/stats/commonallplayers?IsOnlyCurrentSeason=1&LeagueID=00&Season=2015-16'),
+    'path': encodeURI('/stats/commonallplayers?IsOnlyCurrentSeason=1&LeagueID=00&Season=2016-17'),
   }), (resp) => {
     var output = '';
 
@@ -49,7 +52,6 @@ app.get('/players', (req, res) => {
 
 app.get('/careerstats/:id', (req, res) => {
   const id = req.params.id;
-  console.log(id);
 
   http.get(Object.assign(options, {
     'path': encodeURI(`/stats/playercareerstats?LeagueID=00&PerMode=PerGame&PlayerID=${id}`),
